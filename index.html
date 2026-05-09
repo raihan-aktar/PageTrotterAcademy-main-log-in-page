@@ -217,10 +217,12 @@
                 <div class="relative">
                     <select id="course-select" class="ray-input ray-select pr-10" aria-label="Select Course">
                         <option value="" disabled selected>Choose Your Course</option>
-                        <option value="net-set">NET / SET / GATE</option>
-                        <option value="rbu-odd">RBU (PG Odd)</option>
-                        <option value="wbsu-odd">WBSU (UG Odd)</option>
-                        <option value="cbse-12">CBSE Class 12</option>
+                        <option value="rbu-ma-sem1">RBU M.A. SEM 1</option>
+                        <option value="rbu-ma-sem2">RBU M.A. SEM 2</option>
+                        <option value="wbsu-ba-sem1">WBSU B.A. SEM 1</option>
+                        <option value="wbsu-ba-sem2">WBSU B.A. SEM 2</option>
+                        <option value="cbse-12">CBSE 12</option>
+                        <option value="dissertation">DISSERTATION GUIDANCE</option>
                     </select>
                     <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-ink">
                         <i class="fas fa-chevron-down text-sm"></i>
@@ -244,7 +246,7 @@
     </main>
 
     <footer class="mt-auto pt-10 text-[10px] uppercase tracking-widest font-ray opacity-40">
-        &copy; 2024 Page Trotter Academy
+        &copy; 2024 Page Trotter
     </footer>
 
     <script type="module">
@@ -252,11 +254,14 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Configuration for the new course list
         const courses = {
-            'net-set': { code: 'PTA-NET', url: 'https://pagetrotteracademy-net-set-gate.netlify.app/' },
-            'rbu-odd': { code: 'PTA-RBU', url: 'https://page-trotter-academy-rbu-pg-odd.netlify.app/' },
-            'wbsu-odd': { code: 'PTA-WBSU', url: 'https://pagetrotter-ug-wbsu-odd.netlify.app/' },
-            'cbse-12': { code: 'PTA-CBSE', url: 'https://cbseclass12.netlify.app/' }
+            'rbu-ma-sem1': { code: 'PTA-RBU1', url: '#' },
+            'rbu-ma-sem2': { code: 'PTA-RBU2', url: '#' },
+            'wbsu-ba-sem1': { code: 'PTA-WBSU1', url: '#' },
+            'wbsu-ba-sem2': { code: 'PTA-WBSU2', url: '#' },
+            'cbse-12': { code: 'PTA-CBSE', url: 'https://cbseclass12.netlify.app/' },
+            'dissertation': { code: 'PTA-DISS', url: '#' }
         };
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'pagetrotter-hub';
@@ -299,7 +304,7 @@
             if (localStorage.getItem(unlockedKey) === 'true') {
                 loginBtn.innerText = "Redirecting...";
                 loginBtn.disabled = true;
-                window.location.href = courses[courseId].url;
+                if (courses[courseId].url !== '#') window.location.href = courses[courseId].url;
                 return;
             }
 
@@ -307,7 +312,7 @@
                 const snap = await getDoc(doc(db, 'artifacts', appId, 'users', userId, 'unlockedCourses', courseId));
                 if (snap.exists() && snap.data().unlocked) {
                     localStorage.setItem(unlockedKey, 'true');
-                    window.location.href = courses[courseId].url;
+                    if (courses[courseId].url !== '#') window.location.href = courses[courseId].url;
                 }
             }
         });
@@ -323,7 +328,11 @@
                     setDoc(doc(db, 'artifacts', appId, 'users', userId, 'unlockedCourses', courseId), { unlocked: true });
                 }
                 loginBtn.innerText = "Accessing...";
-                window.location.href = courses[courseId].url;
+                if (courses[courseId].url !== '#') {
+                    window.location.href = courses[courseId].url;
+                } else {
+                    loginBtn.innerText = "Course Coming Soon";
+                }
             } else {
                 errorMsg.style.display = 'block';
                 // Shake effect
