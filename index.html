@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Page Trotter Academy | Portal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Eczar:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+Bengali:wght@700;900&family=Rozha+One&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        ray: ['Eczar', 'serif'],
+                        body: ['Lora', 'serif'],
+                        calli: ['"Yatra One"', 'cursive'],
+                        rozha: ['"Rozha One"', 'serif'],
+                    },
+                    colors: {
+                        ink: '#1a1a1a',
+                        parchment: '#f4ede4',
+                        paper: '#fcf9f2',
+                        terracotta: '#c0392b',
+                        mustard: '#d4ac0d',
+                        bengalblue: '#1f3a5e',
+                        forest: '#2e4a3d',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; box-sizing: border-box; }
+
+        body {
+            background-color: #f4ede4;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .ray-card {
+            background: #fcf9f2;
+            border: 2px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            border-radius: 2px;
+            width: 100%;
+        }
+
+        .ray-input {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #1a1a1a;
+            padding: 1rem;
+            font-family: 'Eczar', serif;
+            font-size: 1.05rem;
+            outline: none;
+            text-transform: uppercase;
+            transition: background 0.2s;
+            font-weight: 600;
+            border-radius: 0;
+        }
+        .ray-input:focus { background: #f4ede4; }
+
+        .ray-select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .ray-btn {
+            background: #d4ac0d;
+            color: #1a1a1a;
+            font-family: 'Eczar', serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 2px solid #1a1a1a;
+            padding: 1rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            transition: all 0.1s;
+            width: 100%;
+            font-size: 1rem;
+            border-radius: 0;
+        }
+        .ray-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0 #1a1a1a;
+        }
+
+        /* Calligraphy Titles */
+        .welcome-block { text-align: center; margin-bottom: 1.5rem; }
+        .welcome-line { font-family: 'Rozha One', serif; line-height: 1.1; }
+        
+        .welcome-prefix {
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            color: #b5390c;
+            text-shadow: 1px 2px 0 rgba(0,0,0,0.1);
+            display: block;
+        }
+
+        .welcome-academy {
+            font-size: clamp(1.8rem, 8vw, 2.8rem);
+            color: #1f3a5e;
+            text-shadow: 3px 3px 0 #d4ac0d;
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        .title-rule {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 12px auto 16px;
+            width: 70%;
+        }
+        .title-rule::before, .title-rule::after { content: ''; flex: 1; height: 1.5px; background: #1a1a1a; }
+        .title-rule-diamond { width: 8px; height: 8px; background: #c0392b; transform: rotate(45deg); }
+
+        .welcome-sub {
+            font-family: 'Eczar', serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0.7;
+        }
+
+        /* Centered Explore Button */
+        .explore-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .icon-btn {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2.5px solid #1a1a1a;
+            font-size: 1.4rem;
+            box-shadow: 5px 5px 0 #1a1a1a;
+            transition: all 0.1s;
+            text-decoration: none;
+            background: #1f3a5e;
+            color: #fcf9f2;
+        }
+        .icon-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #1a1a1a; }
+        
+        .btn-label {
+            font-family: 'Eczar', serif;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 10px;
+            color: #1a1a1a;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            .ray-card { padding: 1.5rem !important; }
+            .welcome-academy { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-terracotta selection:text-paper min-h-[100dvh] flex flex-col items-center py-10 px-6">
+
+    <!-- Centered Header Explore -->
+    <header class="explore-container">
+        <a href="https://pagetrotteracademydisplay.netlify.app/?utm_source=ig&utm_medium=social&utm_content=link_in_bio"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Explore ALL Courses"
+           class="icon-btn">
+            <i class="fas fa-globe"></i>
+        </a>
+        <span class="btn-label">Explore ALL Courses</span>
+    </header>
+
+    <!-- Academy Name -->
+    <div class="text-center mb-10">
+        <h2 class="font-ray text-sm sm:text-base font-extrabold uppercase tracking-[0.3em] text-ink opacity-80">
+            Page Trotter Academy
+        </h2>
+    </div>
+
+    <!-- Main Content -->
+    <main class="w-full max-w-sm mx-auto">
+        <div class="ray-card p-8 flex flex-col items-center">
+
+            <!-- Welcome Branding -->
+            <div class="welcome-block w-full">
+                <span class="welcome-line welcome-prefix">Welcome to the</span>
+                <span class="welcome-line welcome-academy">Pagetrotter<br>Academy</span>
+                <div class="title-rule">
+                    <div class="title-rule-diamond"></div>
+                </div>
+                <p class="welcome-sub">Access your course portal</p>
+            </div>
+
+            <!-- Form -->
+            <div class="w-full space-y-5">
+                <div class="relative">
+                    <select id="course-select" class="ray-input ray-select pr-10" aria-label="Select Course">
+                        <option value="" disabled selected>Choose Your Course</option>
+                        <option value="net-set">NET / SET / GATE</option>
+                        <option value="rbu-odd">RBU (PG Odd)</option>
+                        <option value="wbsu-odd">WBSU (UG Odd)</option>
+                        <option value="cbse-12">CBSE Class 12</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-ink">
+                        <i class="fas fa-chevron-down text-sm"></i>
+                    </div>
+                </div>
+
+                <div id="code-container" class="space-y-4" style="display: none;">
+                    <input type="text" id="access-code"
+                           class="ray-input text-center placeholder:text-gray-400"
+                           placeholder="ENTER ACCESS CODE"
+                           autocomplete="off" spellcheck="false">
+
+                    <div id="error-msg" class="text-terracotta text-xs font-bold text-center uppercase tracking-wider" style="display: none;">
+                        Invalid access code.
+                    </div>
+
+                    <button id="login-btn" class="ray-btn">Unlock Now</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-auto pt-10 text-[10px] uppercase tracking-widest font-ray opacity-40">
+        &copy; 2024 Page Trotter Academy
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const courses = {
+            'net-set': { code: 'PTA-NET', url: 'https://pagetrotteracademy-net-set-gate.netlify.app/' },
+            'rbu-odd': { code: 'PTA-RBU', url: 'https://page-trotter-academy-rbu-pg-odd.netlify.app/' },
+            'wbsu-odd': { code: 'PTA-WBSU', url: 'https://pagetrotter-ug-wbsu-odd.netlify.app/' },
+            'cbse-12': { code: 'PTA-CBSE', url: 'https://cbseclass12.netlify.app/' }
+        };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'pagetrotter-hub';
+        let db = null;
+        let userId = null;
+
+        async function initFirebase() {
+            try {
+                if (typeof __firebase_config !== 'undefined') {
+                    const app = initializeApp(JSON.parse(__firebase_config));
+                    const auth = getAuth(app);
+                    db = getFirestore(app);
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    onAuthStateChanged(auth, (user) => { if (user) userId = user.uid; });
+                }
+            } catch (e) { console.warn("Firebase Init Failed"); }
+        }
+        initFirebase();
+
+        const selectEl = document.getElementById('course-select');
+        const codeContainer = document.getElementById('code-container');
+        const accessCodeInput = document.getElementById('access-code');
+        const loginBtn = document.getElementById('login-btn');
+        const errorMsg = document.getElementById('error-msg');
+
+        selectEl.addEventListener('change', async (e) => {
+            const courseId = e.target.value;
+            if (!courseId) return;
+
+            errorMsg.style.display = 'none';
+            accessCodeInput.value = '';
+            codeContainer.style.display = 'block';
+            
+            // Check persistence
+            const unlockedKey = `unlocked_${courseId}`;
+            if (localStorage.getItem(unlockedKey) === 'true') {
+                loginBtn.innerText = "Redirecting...";
+                loginBtn.disabled = true;
+                window.location.href = courses[courseId].url;
+                return;
+            }
+
+            if (db && userId) {
+                const snap = await getDoc(doc(db, 'artifacts', appId, 'users', userId, 'unlockedCourses', courseId));
+                if (snap.exists() && snap.data().unlocked) {
+                    localStorage.setItem(unlockedKey, 'true');
+                    window.location.href = courses[courseId].url;
+                }
+            }
+        });
+
+        function processLogin() {
+            const courseId = selectEl.value;
+            const inputCode = accessCodeInput.value.trim().toUpperCase();
+            const MASTER_CODE = 'PTAMASTER000';
+
+            if (inputCode === MASTER_CODE) {
+                localStorage.setItem(`unlocked_${courseId}`, 'true');
+                if (db && userId) {
+                    setDoc(doc(db, 'artifacts', appId, 'users', userId, 'unlockedCourses', courseId), { unlocked: true });
+                }
+                loginBtn.innerText = "Accessing...";
+                window.location.href = courses[courseId].url;
+            } else {
+                errorMsg.style.display = 'block';
+                // Shake effect
+                codeContainer.animate([
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 200, iterations: 1 });
+            }
+        }
+
+        loginBtn.addEventListener('click', processLogin);
+        accessCodeInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processLogin(); });
+    </script>
+</body>
+</html>
